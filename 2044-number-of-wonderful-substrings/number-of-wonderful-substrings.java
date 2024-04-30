@@ -1,17 +1,18 @@
 class Solution {
     public long wonderfulSubstrings(String word) {
         long result = 0;
-        Map<Integer, Integer> count = new HashMap<>();
-        count.put(0, 1); 
+        int[] count = new int[1024]; // 2^10 for all possible bitmasks
+
+        count[0] = 1; // Initialize with the empty string
 
         int mask = 0;
         for (char c : word.toCharArray()) {
             mask ^= 1 << (c - 'a');
-            result += count.getOrDefault(mask, 0);
+            result += count[mask];
             for (int i = 0; i < 10; i++) {
-                result += count.getOrDefault(mask ^ (1 << i), 0);
+                result += count[mask ^ (1 << i)];
             }
-            count.put(mask, count.getOrDefault(mask, 0) + 1);
+            count[mask]++;
         }
 
         return result;
