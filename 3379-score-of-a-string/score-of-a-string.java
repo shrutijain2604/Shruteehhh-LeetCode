@@ -5,9 +5,12 @@ class Solution {
             if(s.charAt(i) == s.charAt(i+1)){
                 continue;
             }
-            total += Math.abs(s.charAt(i) - s.charAt(i+1));
+            else if(s.charAt(i) > s.charAt(i+1)){
+                total += s.charAt(i) - s.charAt(i+1);
+            }
+            else
+                total +=(s.charAt(i+1) - s.charAt(i));
         }
-
         return total;
     }
 }
