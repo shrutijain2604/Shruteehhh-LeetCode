@@ -1,28 +1,21 @@
 class Solution {
-
     public int findMinDifference(List<String> timePoints) {
-        // convert input to minutes
-        int[] minutes = new int[timePoints.size()];
-        for (int i = 0; i < timePoints.size(); i++) {
-            String time = timePoints.get(i);
-            int h = Integer.parseInt(time.substring(0, 2));
-            int m = Integer.parseInt(time.substring(3));
-            minutes[i] = h * 60 + m;
+        int n = timePoints.size();
+        int arr[] = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            String time[] = timePoints.get(i).split(":");
+            arr[i] = Integer.valueOf(time[0]) * 60 + Integer.valueOf(time[1]);
         }
 
-        // sort times in ascending order
-        Arrays.sort(minutes);
+        Arrays.sort(arr);
 
-        // find minimum difference across adjacent elements
-        int ans = Integer.MAX_VALUE;
-        for (int i = 0; i < minutes.length - 1; i++) {
-            ans = Math.min(ans, minutes[i + 1] - minutes[i]);
+        int min = Integer.MAX_VALUE;
+        for (int i = 0; i < n - 1; i++) {
+            min = Math.min(min, (arr[i + 1] - arr[i]));
         }
-
-        // consider difference between last and first element
-        return Math.min(
-            ans,
-            24 * 60 - minutes[minutes.length - 1] + minutes[0]
-        );
+        
+        min = Math.min(min, (1440 + arr[0] - arr[n - 1]));
+        return min;
     }
 }
